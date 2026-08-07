@@ -144,6 +144,24 @@ class TransactionIsolationTests(TestCase):
         self.assertNotContains(response, self.account2.account_number)
 
 
+class DashboardTemplateTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='grace', password='StrongPass123!')
+        self.account = BankAccount.objects.create(
+            user=self.user, account_holder_name='Grace Doe', account_number='5000000050',
+            current_balance=Decimal('0.00'),
+        )
+        self.client.login(username='grace', password='StrongPass123!')
+
+    def test_dashboard_renders_chart_data_and_branding(self):
+        response = self.client.get(reverse('dashboard'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="chart-labels"')
+        self.assertContains(response, 'id="chart-deposits"')
+        self.assertContains(response, 'id="chart-withdrawals"')
+        self.assertContains(response, 'MHR Bank')
+
+
 class DashboardAggregationTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='frank', password='StrongPass123!')

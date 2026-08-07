@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Dashboard - BankEase{% endblock %}
+{% block title %}Dashboard - MHR Bank{% endblock %}
 {% block content %}
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
     <div>
@@ -108,6 +108,9 @@
                     </li>
                 </ul>
                 <canvas id="depositWithdrawChart" height="180"></canvas>
+                <script id="chart-labels" type="application/json">{{ chart_labels|json_script }}</script>
+                <script id="chart-deposits" type="application/json">{{ chart_deposits|json_script }}</script>
+                <script id="chart-withdrawals" type="application/json">{{ chart_withdrawals|json_script }}</script>
             </div>
         </div>
     </div>
@@ -118,13 +121,17 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script>
     const ctx = document.getElementById('depositWithdrawChart');
+    const chartLabels = JSON.parse(document.getElementById('chart-labels').textContent);
+    const chartDeposits = JSON.parse(document.getElementById('chart-deposits').textContent);
+    const chartWithdrawals = JSON.parse(document.getElementById('chart-withdrawals').textContent);
+
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: {{ chart_labels|safe }},
+            labels: chartLabels,
             datasets: [
-                { label: 'Deposits', data: {{ chart_deposits|safe }}, backgroundColor: '#12805c' },
-                { label: 'Withdrawals', data: {{ chart_withdrawals|safe }}, backgroundColor: '#c0392b' }
+                { label: 'Deposits', data: chartDeposits, backgroundColor: '#12805c' },
+                { label: 'Withdrawals', data: chartWithdrawals, backgroundColor: '#c0392b' }
             ]
         },
         options: {
