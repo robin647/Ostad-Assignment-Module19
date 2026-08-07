@@ -4,7 +4,7 @@ A secure, server-rendered Django web application for managing bank accounts, dep
 
 ## Description
 
-BankEase lets authenticated users register, create a single personal bank account, deposit and withdraw money, and review a searchable, paginated transaction history with dashboard statistics. Every financial operation is performed inside a database transaction, all money fields use `Decimal`, and every query is scoped to the logged-in user so no one can ever view or modify another user's account.
+MHR Bank lets authenticated users register, create a single personal bank account, deposit and withdraw money, and review a searchable, paginated transaction history with dashboard statistics. Every financial operation is performed inside a database transaction, all money fields use `Decimal`, and every query is scoped to the logged-in user so no one can ever view or modify another user's account.
 
 ## Features
 
