@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Deposit - BankEase{% endblock %}
+{% block content %}
+<div class="card auth-card">
+    <div class="card-header"><i class="bi bi-plus-circle"></i> Deposit Money</div>
+    <div class="card-body p-4">
+        <p class="text-muted">Current Balance: <strong>৳{{ account.current_balance|floatformat:2 }}</strong></p>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Amount (৳)</label>
+                {{ form.amount }}
+                {% for error in form.amount.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+            <button type="submit" class="btn btn-bank w-100">Deposit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

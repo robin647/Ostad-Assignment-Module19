@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Transaction History - BankEase{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <h4 class="mb-0"><i class="bi bi-clock-history"></i> Transaction History</h4>
+    <a href="{% url 'transaction_export' %}?{{ querystring }}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-download"></i> Export Transactions CSV
+    </a>
+</div>
+
+<div class="card card-stat mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label small">Type</label>
+                {{ filter_form.type }}
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small">Start Date</label>
+                {{ filter_form.start_date }}
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small">End Date</label>
+                {{ filter_form.end_date }}
+            </div>
+            <div class="col-md-3 d-grid">
+                <button type="submit" class="btn btn-bank"><i class="bi bi-funnel"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card card-stat">
+    <div class="card-body p-0">
+        {% if page_obj.object_list %}
+        <table class="table table-transactions mb-0">
+            <thead>
+                <tr><th>Type</th><th>Amount</th><th>Date &amp; Time</th><th>Balance After Transaction</th></tr>
+            </thead>
+            <tbody>
+            {% for txn in page_obj.object_list %}
+                <tr>
+                    <td>
+                        {% if txn.transaction_type == 'deposit' %}
+                            <span class="badge bg-success">Deposit</span>
+                        {% else %}
+                            <span class="badge bg-danger">Withdrawal</span>
+                        {% endif %}
+                    </td>
+                    <td>৳{{ txn.amount|floatformat:2 }}</td>
+                    <td>{{ txn.created_at|date:"d M Y, h:i A" }}</td>
+                    <td>৳{{ txn.balance_after_transaction|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p class="text-muted p-4 mb-0 text-center">No transactions found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&{{ querystring }}">Previous</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}&{{ querystring }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&{{ querystring }}">Next</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

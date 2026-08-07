@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Login - BankEase{% endblock %}
+{% block content %}
+<div class="card auth-card">
+    <div class="card-header">
+        <i class="bi bi-box-arrow-in-right"></i> Login to your account
+    </div>
+    <div class="card-body p-4">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            {% if form.errors %}
+                <div class="alert alert-danger">Invalid username or password.</div>
+            {% endif %}
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="btn btn-bank w-100">Login</button>
+        </form>
+        <p class="text-center mt-3 mb-0">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+</div>
+{% endblock %}

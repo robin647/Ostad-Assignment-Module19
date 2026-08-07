@@ -1,0 +1,66 @@
+:root {
+    --bank-primary: #0b3d2e;
+    --bank-accent: #12805c;
+    --bank-gold: #d4af37;
+}
+
+body {
+    background-color: #f4f7f6;
+}
+
+.bank-navbar {
+    background: linear-gradient(90deg, var(--bank-primary), var(--bank-accent));
+}
+
+.card-stat {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(11, 61, 46, 0.08);
+    transition: transform 0.15s ease;
+}
+
+.card-stat:hover {
+    transform: translateY(-3px);
+}
+
+.card-stat .stat-icon {
+    font-size: 1.75rem;
+    color: var(--bank-accent);
+}
+
+.auth-card {
+    max-width: 460px;
+    margin: 2rem auto;
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(11, 61, 46, 0.12);
+}
+
+.auth-card .card-header {
+    background: var(--bank-primary);
+    color: #fff;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+    font-weight: 600;
+}
+
+.btn-bank {
+    background-color: var(--bank-accent);
+    border-color: var(--bank-accent);
+    color: #fff;
+}
+
+.btn-bank:hover {
+    background-color: var(--bank-primary);
+    border-color: var(--bank-primary);
+    color: #fff;
+}
+
+.table-transactions thead {
+    background-color: var(--bank-primary);
+    color: #fff;
+}
+
+.account-number-badge {
+    letter-spacing: 1px;
+    font-family: monospace;
+}
